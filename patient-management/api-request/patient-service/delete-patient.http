@@ -1,0 +1,4 @@
+### DELETE request to make patient delete by id
+DELETE http://localhost:4004/api/patients/c28f6f8e-87a5-47fd-83e9-0f2dce4fb1aa
+Authorization: Bearer {{token}}
+###

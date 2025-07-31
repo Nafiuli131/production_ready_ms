@@ -1,0 +1,36 @@
+server:
+  port: 4004
+
+auth:
+  service:
+    url: ${AUTH_SERVICE_URL:http://host.docker.internal:4005}  # fallback if env not set
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: patient-get-route
+          uri: http://host.docker.internal:4000
+          predicates:
+            - Path=/api/patients/**
+            - Method=GET      # Don't need token for get method
+
+        - id: patient-secure-route
+          uri: http://host.docker.internal:4000
+          predicates:
+            - Path=/api/patients/**
+            - Method=POST,PUT,DELETE
+          filters:
+            - JwtValidation     #Need token for other method
+
+        - id: auth-service-route
+          uri: http://host.docker.internal:4005
+          predicates:
+            - Path=/auth/**
+
+        - id: api-docs-patient-route
+          uri: http://host.docker.internal:4000
+          predicates:
+            - Path=/swagger-ui/patients/**
+          filters:
+            - RewritePath=/swagger-ui/patients/(?<segment>.*), /swagger-ui/${segment}

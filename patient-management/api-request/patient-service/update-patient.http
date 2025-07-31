@@ -1,0 +1,13 @@
+### UPDATE request to update Patient
+PUT http://localhost:4004/api/patients/123e4567-e89b-12d3-a456-426614174000
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "John Doe Updated",
+  "email": "johntestupdate.doe@example.com",
+  "address": "123 main street22",
+  "dateOfBirth": "1995-09-09"
+}
+
+###
